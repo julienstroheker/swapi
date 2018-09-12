@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swapi
+spec:
+  selector:
+    matchLabels:
+      app: swapi
+  template:
+    metadata:
+      labels:
+        app: swapi
+    spec:
+      containers:
+      - name: swapi
+        image: julienstroheker/swapi
+        ports:
+        - containerPort: 8000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: swapi-svc
+spec:
+  selector:
+    app: swapi
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8000
+
